@@ -1,6 +1,5 @@
 @CHARSET "ISO-8859-1";
 
 .contentBody {
-	color: red;
-	font-weight: bold;
+	vertical-align: top;
 }
