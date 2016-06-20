@@ -1,21 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"> -->
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-<title>Demand Forecast</title>
+	<title>Demand Forecast</title>
 </h:head>
 <h:body>
-	 <ui:composition template="/templates/template.xhtml">  
-		<ui:define name="content"> 
-		    <h:outputStylesheet library="css" name="index.css"  />
-			<h2>overriden content</h2>
-			<p class="contentBody">Testing this copy</p>
-   				#{helloWorld.message}
-   			<a href="http://www.anastasiyaandrushchak.com">Go to this site!</a>
-         </ui:define>
-	 </ui:composition>
+	<ui:composition template="/templates/template.xhtml">
+		<ui:define name="content">
+			<h:outputStylesheet library="css" name="index.css" />
+			<h:form enctype="multipart/form-data">
+				<h:panelGrid columns="1" class="descriptionGrd">
+					<h:outputText id="description" value="#{BestFormula.description}"></h:outputText>
+				</h:panelGrid>
+				<h:panelGrid columns="4">
+					<h:outputLabel for="demandData">Choose your data file: </h:outputLabel>
+					<h:inputFile id="demandData"
+						validator="#{BestFormula.validateFile}"
+						value="#{BestFormula.dataFile}" required="true"></h:inputFile>
+					<!--  -->
+					<h:commandButton action="#{BestFormula.calculateFormula()}"	value="Submit"></h:commandButton>
+					<h:message for="demandData" styleClass="errorMessage">
+						<h:messages showdetail="true" styleClass="errorMessage"></h:messages>
+					</h:message>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{BestFormula.visible}" columns="1">
+					<h:outputLabel id="resultValue"
+						value="The recommended formula for your data is:  #{BestFormula.bestFormula}
+	   			 with a defect rate of #{BestFormula.defectRate}">
+					</h:outputLabel>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{BestFormula.visible}" columns="1">
+					<h3>Summary</h3>
+				</h:panelGrid>
+				<h:panelGrid rendered="#{BestFormula.visible}" columns="4">
+					<h:outputLabel value="Moving Average Defect Rate"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('movingAverageDefect')}"></h:outputText>
+
+					<h:outputLabel value="Moving Average Forecast"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('movingAverageFC')}"></h:outputText>
+
+					<h:outputLabel value="Naive Method Defect Rate"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('naiveMethodDefect')}"></h:outputText>
+
+					<h:outputLabel value="Naive Method Forecast"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('naiveMethodFC')}"></h:outputText>
+
+					<h:outputLabel value="Naive Trend Method Defect Rate"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('naiveTrendMethodDefect')}"></h:outputText>
+
+					<h:outputLabel value="Naive Trend Method Forecast"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('naiveTrendMethodFC')}"></h:outputText>
+
+					<h:outputLabel value="Weighed Moving Average Defect Rate"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('weighedMovingAverageDefect')}"></h:outputText>
+					
+					<h:outputLabel value="Weighed Moving Average Forecast"></h:outputLabel>
+					<h:outputText value="#{BestFormula.calculate('weighedMovingAverageFC')}"></h:outputText>
+				</h:panelGrid>
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
