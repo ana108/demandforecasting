@@ -8,7 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Demand Forecast</title>
 </h:head>
@@ -20,52 +21,66 @@
 				<h:panelGrid columns="1" class="descriptionGrd">
 					<h:outputText id="description" value="#{BestFormula.description}"></h:outputText>
 				</h:panelGrid>
-				<h:panelGrid columns="4">
-					<h:outputLabel for="demandData">Choose your data file: </h:outputLabel>
+				<p:panelGrid style="border: none;">
+					<p:row >
+						<p:column colspan="3"><h:outputLabel value="Weighed Moving Average:"></h:outputLabel></p:column>
+					</p:row>
+					<p:row colspan="3">
+						<p:column>
+							<h:inputTextarea id="movingAvgData" value="#{WeighedMovingAverage.userData}" >
+							</h:inputTextarea>
+						</p:column>
+						<p:column>
+							<h:commandButton id="myTwo" value="Predict" action="#{WeighedMovingAverage.calculate()}"
+							 style="margin-right: 15px">
+							</h:commandButton>
+						</p:column>
+						<p:column>
+							<p:panelGrid rendered="#{WeighedMovingAverage.visible}" columns="2" >
+								<h:outputLabel value="Result:"></h:outputLabel>
+								<h:outputLabel value=" "></h:outputLabel>
+								<h:outputLabel>Predicted Next Value: </h:outputLabel>
+								<h:outputText id="weighedResult" value="#{WeighedMovingAverage.result}"></h:outputText>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3"><h:outputLabel value="Naive Trend Method:"></h:outputLabel></p:column>
+					</p:row>
+					<p:row colspan="3">
+						<p:column>
+							<h:inputTextarea id="naiveData" value="#{NaiveTrend.userData}" style="margin-right: 15px"></h:inputTextarea>
+						</p:column>
+						<p:column>
+							<h:commandButton id="myThree" value="Predict" action="#{NaiveTrend.calculate()}"
+							 style="margin-right: 15px">
+							</h:commandButton>
+						</p:column>
+						<p:column>
+							<p:panelGrid rendered="#{NaiveTrend.visible}" columns="2" >
+								<h:outputLabel value="Result:"></h:outputLabel>
+								<h:outputLabel value=" "></h:outputLabel>
+								<h:outputLabel>Predicted Next Value: </h:outputLabel>
+								<h:outputText id="naiveTrendResult" value="#{NaiveTrend.result}"></h:outputText>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<h:panelGrid columns="2">
+					<h:outputLabel>Or if you are unsure about which formula you should use, enter your data file here to see which formula meets your needs.</h:outputLabel>
 					<h:inputFile id="demandData"
 						validator="#{BestFormula.validateFile}"
-						value="#{BestFormula.dataFile}" required="true"></h:inputFile>
-					<!--  -->
-					<h:commandButton action="#{BestFormula.calculateFormula()}"	value="Submit"></h:commandButton>
-					<h:message for="demandData" styleClass="errorMessage">
-						<h:messages showdetail="true" styleClass="errorMessage"></h:messages>
+						value="#{BestFormula.dataFile}" required="#{not empty BestFormula.dataFile}" valueChangeListener="#{BestFormula.localeChanged}"
+						onchange="submit()"></h:inputFile>
+					<h:message id="errMessage" for="demandData" styleClass="errorMessage">
+						<h:messages id="joy" showdetail="true" styleClass="errorMessage"></h:messages>
 					</h:message>
 				</h:panelGrid>
 				<h:panelGrid rendered="#{BestFormula.visible}" columns="1">
 					<h:outputLabel id="resultValue"
-						value="The recommended formula for your data is:  #{BestFormula.bestFormula}
-	   			 with a defect rate of #{BestFormula.defectRate}">
+						value="The recommended formula for your data is:  #{BestFormula.bestFormula}">
 					</h:outputLabel>
-				</h:panelGrid>
-				<h:panelGrid rendered="#{BestFormula.visible}" columns="1">
-					<h3>Summary</h3>
-				</h:panelGrid>
-				<h:panelGrid rendered="#{BestFormula.visible}" columns="4">
-					<h:outputLabel value="Moving Average Defect Rate"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('movingAverageDefect')}"></h:outputText>
-
-					<h:outputLabel value="Moving Average Forecast"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('movingAverageFC')}"></h:outputText>
-
-					<h:outputLabel value="Naive Method Defect Rate"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('naiveMethodDefect')}"></h:outputText>
-
-					<h:outputLabel value="Naive Method Forecast"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('naiveMethodFC')}"></h:outputText>
-
-					<h:outputLabel value="Naive Trend Method Defect Rate"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('naiveTrendMethodDefect')}"></h:outputText>
-
-					<h:outputLabel value="Naive Trend Method Forecast"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('naiveTrendMethodFC')}"></h:outputText>
-
-					<h:outputLabel value="Weighed Moving Average Defect Rate"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('weighedMovingAverageDefect')}"></h:outputText>
-					
-					<h:outputLabel value="Weighed Moving Average Forecast"></h:outputLabel>
-					<h:outputText value="#{BestFormula.calculate('weighedMovingAverageFC')}"></h:outputText>
-				</h:panelGrid>
-
+				</h:panelGrid> 
 			</h:form>
 		</ui:define>
 	</ui:composition>
