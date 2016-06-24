@@ -1,0 +1,6 @@
+Forecasting is an important tool for accurately planning  the day to day operations of a business. Demand forecasting is particularly important for managing a business' inventory. Being able to 
+forecast demand accurately can save a business time and most importantly money. Examples
+of how accurate forecast can help a business save money are: predicting number of customers
+which allows the manager to schedule just the right number of staff. Being able
+to accurately predict demand for your business can prevent a business from overspending or
+underspending resulting in a cost for the business that could have been prevented.

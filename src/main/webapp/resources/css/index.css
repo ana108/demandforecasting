@@ -18,3 +18,17 @@ textarea {
 	height: 100px;
 	width: 300px;
 }
+.definition {
+	font-weight: bold;
+	text-decoration: underline;
+	}
+.leftDefinition {
+	float: right;
+	max-width: 50%;
+	width: 50%;
+}
+.rightDefinition {
+	float: left;
+	max-width: 50%;
+	width: 50%;
+}

@@ -1,0 +1,7 @@
+This app provides you with a list of popular formulas to use when forecasting demand.
+Each formula has a name and a short description. To get a prediction of what your next demand value
+will be, enter all your data, separated by either single space or coma and hit predict. The result should
+be an approximate value of the demand in the next period.
+
+It is important to pick a formula that is right for you data. Come back in a few weeks and maybe there
+will be a tool to help you decide which formula works best for you.

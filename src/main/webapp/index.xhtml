@@ -18,8 +18,19 @@
 		<ui:define name="content">
 			<h:outputStylesheet library="css" name="index.css" />
 			<h:form enctype="multipart/form-data">
-				<h:panelGrid columns="1" class="descriptionGrd">
-					<h:outputText id="description" value="#{BestFormula.description}"></h:outputText>
+				<h:panelGrid columns="2" class="descriptionGrd">
+					<h:panelGrid columns="1">
+						<div class="leftDefinition">
+						<h:outputLabel class="definition">What is demand forecasting?</h:outputLabel>
+						<h:outputText id="introduction" value="#{BestFormula.intro}"></h:outputText>
+						</div>
+					</h:panelGrid>
+					<h:panelGrid columns="1">
+						<div class="rightDefinition">
+						<h:outputLabel class="definition">What this app provides...</h:outputLabel>
+						<h:outputText id="description" value="#{BestFormula.description}"></h:outputText>
+						</div>
+					</h:panelGrid>
 				</h:panelGrid>
 				<p:panelGrid style="border: none;">
 					<p:row >

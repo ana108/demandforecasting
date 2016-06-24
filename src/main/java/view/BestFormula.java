@@ -1,5 +1,8 @@
 package view;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.event.ValueChangeListener;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.Part;
 
@@ -29,7 +30,7 @@ public class BestFormula {
 	private boolean visible = false;
 	private String delimiter = " ";
 	private String description;
-
+	private String intro;
 	private String weighedMovingAverageData;
 	
 	public Part getDataFile() {
@@ -90,16 +91,57 @@ public class BestFormula {
 	
 	public String getDescription() {
 		if (description == null) {
-			this.description = "This tool will help you figure out which formula will give the best results based on previous demand."
-					+ " Please select a comma separated csv or txt file with historical data. Coma and space separated";
+			File file = null;
+			Scanner sc;
+			try {
+				file = new File(this.getClass().getClassLoader().getResource("description.txt").toURI());
+				sc = new Scanner(file);
+				description = "";
+				while(sc.hasNext()){
+					description += sc.nextLine();
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			
 		}
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	
+	public String getIntro() {
+		if (intro == null) {
+			File file = null;
+			Scanner sc;
+			try {
+				file = new File(this.getClass().getClassLoader().getResource("introduction.txt").toURI());
+				sc = new Scanner(file);
+				intro = "";
+				while(sc.hasNext()){
+					intro += sc.nextLine();
+				}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
 	public void readFile() {
 		try {
 			Scanner sc = new Scanner(dataFile.getInputStream());
